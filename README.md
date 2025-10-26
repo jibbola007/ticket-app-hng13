@@ -1,4 +1,4 @@
-# 🎟️ Ticket Management App — HNG Stage 2
+ Ticket Management App — HNG Stage 2
 
 This repo contains three implementations of the same Ticket Management App built in different frameworks:
 
@@ -8,14 +8,14 @@ This repo contains three implementations of the same Ticket Management App built
 | Vue | `/vue-version` | Reactive, template-driven app built with Vue 3. |
 | Twig (PHP) | `/twig-version` | Server-side rendered version using Twig templating. |
 
-## Features
+ Features
 - User authentication (login/logout)
 - Create, edit, delete tickets
 - Persistent data storage
 - Dashboard summary of ticket status
 - Styled with TailwindCSS
 
-## Run Instructions
+ Run Instructions
 See README in each subfolder for setup and usage.
 
 ---
