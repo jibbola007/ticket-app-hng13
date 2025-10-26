@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<main class="min-h-screen bg-gray-50">
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-sm py-4">
+    <div class="max-w-[1440px] mx-auto flex justify-between items-center px-6">
+      <h1 class="text-2xl font-bold text-blue-700">🎯 Dashboard Overview</h1>
+      <div class="flex items-center gap-5">
+        <a href="index.php?page=tickets" class="text-gray-700 hover:text-blue-600 font-medium transition-all">Manage Tickets</a>
+        <a href="auth.php?action=logout"
+           class="bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-lg shadow-sm transition-all">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- DASHBOARD CONTENT -->
+  <section class="max-w-[1440px] mx-auto p-6 md:p-10">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome back, {{ session.username ?? 'User' }} 👋</h2>
+
+    <!-- STATS CARDS -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+      <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-green-500">
+        <h3 class="text-lg font-semibold text-gray-800">Open Tickets</h3>
+        <p class="text-3xl font-bold text-green-600 mt-2">{{ openCount }}</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-amber-500">
+        <h3 class="text-lg font-semibold text-gray-800">In Progress</h3>
+        <p class="text-3xl font-bold text-amber-600 mt-2">{{ progressCount }}</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-gray-400">
+        <h3 class="text-lg font-semibold text-gray-800">Closed Tickets</h3>
+        <p class="text-3xl font-bold text-gray-600 mt-2">{{ closedCount }}</p>
+      </div>
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="bg-white rounded-xl shadow-md p-8">
+      <h3 class="text-xl font-semibold text-blue-700 mb-4">🕒 Recent Tickets</h3>
+
+      {% if tickets|length > 0 %}
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="bg-gray-100 text-left text-sm font-semibold text-gray-700">
+              <th class="py-3 px-4 rounded-tl-lg">Title</th>
+              <th class="py-3 px-4">Status</th>
+              <th class="py-3 px-4 rounded-tr-lg">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for t in tickets|slice(-5)|reverse %}
+              <tr class="border-b hover:bg-gray-50 transition">
+                <td class="py-3 px-4 font-medium">{{ t.title }}</td>
+                <td class="py-3 px-4">
+                  <span class="inline-block text-xs px-3 py-1 rounded-full font-medium
+                    {% if t.status == 'open' %}
+                      bg-green-100 text-green-700
+                    {% elseif t.status == 'in_progress' %}
+                      bg-amber-100 text-amber-700
+                    {% else %}
+                      bg-gray-100 text-gray-700
+                    {% endif %}
+                  ">
+                    {{ t.status }}
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-sm text-gray-600">{{ t.description ?: '—' }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="text-gray-500 text-center py-6">No tickets yet. Go to <a href="index.php?page=tickets" class="text-blue-600 underline">Tickets</a> to create one.</p>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{% endblock %}

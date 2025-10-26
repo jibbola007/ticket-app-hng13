@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<main class="relative min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col justify-between overflow-hidden">
+  <section class="relative flex flex-col items-center text-center py-24 px-6 max-w-[1440px] mx-auto">
+    <div class="absolute -top-20 -left-20 w-64 h-64 bg-blue-300 rounded-full opacity-30 blur-3xl"></div>
+
+    <h1 class="text-5xl font-bold text-blue-700 mb-4">TicketFlow</h1>
+    <p class="text-lg text-gray-600 max-w-xl mb-8">
+      Seamlessly manage, track, and resolve support tickets.
+    </p>
+
+    <div class="flex gap-4 justify-center">
+      <a href="?page=login" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow">Login</a>
+      <a href="?page=signup" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-xl shadow">Get Started</a>
+    </div>
+  </section>
+
+  <img src="assets/shared/wave.svg" alt="" class="absolute bottom-0 left-0 w-full select-none" />
+
+  <footer class="bg-blue-900 text-white py-6 text-center text-sm">
+    © {{ "now"|date("Y") }} TicketFlow. All rights reserved.
+  </footer>
+</main>
+{% endblock %}
