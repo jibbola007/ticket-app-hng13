@@ -4,7 +4,7 @@
 
 A responsive ticket management app built with React, featuring authentication, CRUD, and session management using localStorage.
 
-## 🚀 Tech Stack
+ Tech Stack
 - React 18 + Vite
 - Tailwind CSS
 - Zustand (state)
@@ -13,7 +13,7 @@ A responsive ticket management app built with React, featuring authentication, C
 - React Hot Toast (notifications)
 - Lucide Icons
 
-## 🧩 Features
+ Features
 - Landing page with hero wave and decorative circles
 - Auth (login/signup) with validation
 - Dashboard with ticket stats
@@ -22,14 +22,14 @@ A responsive ticket management app built with React, featuring authentication, C
 - Toast notifications and inline errors
 - Fully responsive & accessible
 
-## 🧠 Auth Simulation
+Auth Simulation
 Stores session under key `ticketapp_session` in localStorage.
 
 ## 🧾 Example User
 Email: test@ticketapp.local  
 Password: password123
 
-## 🧰 Setup
+ Setup
 ```bash
 npm install
 npm run dev
