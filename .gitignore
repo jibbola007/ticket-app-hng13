@@ -1,0 +1,25 @@
+# Node (React/Vue)
+node_modules/
+dist/
+build/
+
+# PHP (Twig)
+vendor/
+data/*.json
+
+# Environment files
+.env
+.env.local
+
+# macOS system files
+.DS_Store
+
+# Logs
+*.log
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# OS cache
+Thumbs.db
