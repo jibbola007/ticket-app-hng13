@@ -1,21 +1,33 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { useTicketStore } from "../store/tickets";
+import { isAuthenticated } from "../utils/auth";
 
+const router = useRouter();
 const ticketStore = useTicketStore();
+
 const title = ref("");
 const description = ref("");
 const status = ref("open");
 const error = ref("");
 const editingTicket = ref(null);
 
-ticketStore.loadTickets();
+// ✅ Auth guard
+onMounted(() => {
+  if (!isAuthenticated()) {
+    router.push("/login");
+  } else {
+    ticketStore.loadTickets();
+  }
+});
 
 function resetForm() {
   title.value = "";
   description.value = "";
   status.value = "open";
   editingTicket.value = null;
+  error.value = "";
 }
 
 function handleSubmit() {
@@ -39,7 +51,6 @@ function handleSubmit() {
       });
     }
 
-    error.value = "";
     resetForm();
   } catch (err) {
     error.value = err.message;
@@ -62,7 +73,7 @@ function handleDelete(id) {
 
 <template>
   <main class="min-h-screen bg-gray-50 py-12">
-    <div class="max-w-1440 mx-auto px-4">
+    <div class="max-w-[1440px] mx-auto px-4">
       <h1 class="text-3xl font-bold text-blue-700 mb-6">Ticket Management</h1>
 
       <!-- Ticket Form -->
@@ -104,21 +115,23 @@ function handleDelete(id) {
 
         <p v-if="error" class="text-red-500 text-sm mt-2">{{ error }}</p>
 
-        <button
-          type="submit"
-          class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition"
-        >
-          {{ editingTicket ? "Update Ticket" : "Add Ticket" }}
-        </button>
+        <div class="mt-4 flex gap-3">
+          <button
+            type="submit"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
+          >
+            {{ editingTicket ? "Update Ticket" : "Add Ticket" }}
+          </button>
 
-        <button
-          v-if="editingTicket"
-          type="button"
-          @click="resetForm"
-          class="mt-4 ml-3 bg-gray-300 hover:bg-gray-400 text-black px-6 py-3 rounded-lg transition"
-        >
-          Cancel
-        </button>
+          <button
+            v-if="editingTicket"
+            type="button"
+            @click="resetForm"
+            class="bg-gray-300 hover:bg-gray-400 text-black px-6 py-3 rounded-lg"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
 
       <!-- Ticket List -->
@@ -134,7 +147,7 @@ function handleDelete(id) {
           }"
         >
           <h3 class="text-lg font-semibold text-gray-800">{{ ticket.title }}</h3>
-          <p class="text-sm text-gray-500 mb-2">{{ ticket.description }}</p>
+          <p class="text-sm text-gray-500 mb-2">{{ ticket.description || 'No description provided' }}</p>
           <span
             class="inline-block text-xs px-3 py-1 rounded-full font-medium"
             :class="{
@@ -165,5 +178,12 @@ function handleDelete(id) {
 
       <p v-else class="text-gray-500 text-center">No tickets yet. Create one above!</p>
     </div>
+
+    <!-- ✅ Footer -->
+    <footer class="bg-white mt-16 py-6 border-t">
+      <div class="max-w-[1440px] mx-auto text-center text-gray-600 text-sm">
+        © 2025 TicketFlow. All rights reserved.
+      </div>
+    </footer>
   </main>
 </template>

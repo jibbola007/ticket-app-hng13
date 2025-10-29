@@ -1,12 +1,23 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   getTickets,
   createTicket,
   updateTicket,
   deleteTicket,
 } from "../utils/tickets";
+import { isAuthenticated } from "../utils/auth"; // ✅ added this import
 
 export default function Tickets() {
+  const navigate = useNavigate(); // ✅ added for redirection
+
+  // ✅ Protect page
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   const [tickets, setTickets] = useState([]);
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("open");
@@ -61,9 +72,19 @@ export default function Tickets() {
   return (
     <main className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-1440 mx-auto px-4">
-        <h1 className="text-3xl font-bold text-blue-700 mb-6">
-          Ticket Management
-        </h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-blue-700">
+            Ticket Management
+          </h1>
+
+          {/* ✅ Back to Dashboard button */}
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
+          >
+            ← Back to Dashboard
+          </button>
+        </div>
 
         {/* Form */}
         <form
